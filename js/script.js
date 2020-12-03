@@ -1,7 +1,12 @@
 $(document).ready(function () {
-    $("form").submit(calculateGrade);
+    var listOfStudents = [];
 
-    function calculateGrade(event) {
+    $("form").submit(addStudent);
+    $("#sort-name").click(sortByName);
+    $("#sort-percent").click(sortByPercent);
+
+
+    function addStudent(event) {
         event.preventDefault();
 
         var student = {};
@@ -12,40 +17,90 @@ $(document).ready(function () {
         student.pointsPossible = $("#points-possible").val();
 
 
-        var percentage = (student.pointsEarned / student.pointsPossible) * 100;
-        var grade;
+        student.percentage = (student.pointsEarned / student.pointsPossible) * 100;
 
-        if (percentage >= 93) {
-            grade = "A";
-        } else if (percentage >= 90) {
-            grade = "A-";
-        } else if (percentage >= 87) {
-            grade = "B+";
-        } else if (percentage >= 83) {
-            grade = "B";
-        } else if (percentage >= 80) {
-            grade = "B-";
-        } else if (percentage >= 77) {
-            grade = "C+";
-        } else if (percentage >= 73) {
-            grade = "C";
-        } else if (percentage >= 70) {
-            grade = "C-";
-        } else if (percentage >= 67) {
-            grade = "D+";
-        } else if (percentage >= 63) {
-            grade = "D";
-        } else if (percentage >= 60) {
-            grade = "D-";
+        if (student.percentage >= 93) {
+            student.grade = "A";
+        } else if (student.percentage >= 90) {
+            student.grade = "A-";
+        } else if (student.percentage >= 87) {
+            student.grade = "B+";
+        } else if (student.percentage >= 83) {
+            student.grade = "B";
+        } else if (student.percentage >= 80) {
+            student.grade = "B-";
+        } else if (student.percentage >= 77) {
+            student.grade = "C+";
+        } else if (student.percentage >= 73) {
+            student.grade = "C";
+        } else if (student.percentage >= 70) {
+            student.grade = "C-";
+        } else if (student.percentage >= 67) {
+            student.grade = "D+";
+        } else if (student.percentage >= 63) {
+            student.grade = "D";
+        } else if (student.percentage >= 60) {
+            student.grade = "D-";
         } else {
-            grade = "F";
+            student.grade = "F";
         }
 
-        $("#first-name-output").text(student.firstName);
-        $("#last-name-output").text(student.lastName);
-        $("#percentage-output").text(percentage.toFixed(0) + "%");
-        $("#grade-output").text(grade);
+        listOfStudents.push(student);
+
+        $("#results").empty();
+
+        for (var s of listOfStudents) {
+            var output = `${s.firstName} ${s.lastName} | ${s.percentage.toFixed(0)}% | ${s.grade} <br>`;
+            $("#results").append(output)
+        }
         $("#results").show();
     }
 
+    function nameSort(n1, n2) {
+        if (n1.lastName < n2.lastName) {
+            return -1;
+        } else if (n1.lastName > n2.lastName) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    function sortByName(event) {
+        event.preventDefault();
+
+        listOfStudents.sort(nameSort);
+
+        $("#results").empty();
+
+        for (var s of listOfStudents) {
+            var output = `${s.firstName} ${s.lastName} | ${s.percentage.toFixed(0)}% | ${s.grade} <br>`;
+            $("#results").append(output);
+        }
+        $("#results").show();
+    }
+
+    function percentSort(n1, n2) {
+        if (n1.percentage < n2.percentage) {
+            return -1;
+        } else if (n1.percentage > n2.percentage) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    function sortByPercent(event) {
+        event.preventDefault();
+
+        listOfStudents.sort(percentSort);
+
+        $("#results").empty();
+
+        for (var s of listOfStudents) {
+            var output = `${s.firstName} ${s.lastName} | ${s.percentage.toFixed(0)}% | ${s.grade} <br>`;
+            $("#results").append(output);
+        }
+        $("#results").show();
+    }
 });

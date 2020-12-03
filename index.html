@@ -27,14 +27,11 @@
                 <label for="points-possible">Points Possible: </label>
                 <input type="number" class="form-control" name="points-possible" id="points-possible">
             </div>
-            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+            <button class="btn btn-primary" type="button" id="sort-name">Sort by Name</button>
+            <button class="btn btn-primary" type="button" id="sort-percent">Sort by Percentage</button>
         </form>
-        <p id="results">
-            First Name: <span id="first-name-output"></span><br>
-            Last Name: <span id="last-name-output"></span><br>
-            Percentage: <span id="percentage-output"></span><br>
-            Grade: <span id="grade-output"></span>
-        </p>
+        <p id="results"></p>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
